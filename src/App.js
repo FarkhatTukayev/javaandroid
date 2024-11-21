@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import TaskList from "./TaskList";
+import EditTask from "./EditTask";
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+  const [selectedTask, setSelectedTask] = useState(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={<TaskList tasks={tasks} setTasks={setTasks} setSelectedTask={setSelectedTask} />}
+        />
+        <Route
+          path="/edit"
+          element={
+            <EditTask
+              task={selectedTask}
+              setTasks={setTasks}
+              tasks={tasks}
+            />
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 
